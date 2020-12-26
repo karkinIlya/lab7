@@ -14,7 +14,7 @@ public class Client {
 
     public static void main(String[] argv) {
         ZContext context = new ZContext(THREADS_COUNT);
-        ZMQ.Socket client = connect(context);
+        ZMQ.Socket client = connectToServer(context);
         Scanner in = new Scanner(System.in);
         while (true) {
 
@@ -23,7 +23,7 @@ public class Client {
         context.destroy();
     }
 
-    public static  ZMQ.Socket connect(ZContext context) {
+    public static  ZMQ.Socket connectToServer(ZContext context) {
         ZMQ.Socket socket = context.createSocket(SocketType.REQ);
         socket.setReceiveTimeOut(TIMEOUT);
         socket.connect(SERVER_ADDRESS);
