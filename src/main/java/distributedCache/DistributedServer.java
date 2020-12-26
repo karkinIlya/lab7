@@ -62,9 +62,9 @@ public class DistributedServer {
                     }
                 } else if (stringMessage.startsWith(PUT_REQUEST)) {
                     String[] splitedString = stringMessage.split(" ");
-                    if (splitedString.length >= 2) {
+                    if (splitedString.length >= 3) {
                         int key = Integer.parseInt(splitedString[1]);
-                        String value = 
+                        String value = splitedString[2];
                         boolean found = false;
                         for (Cache c : caches) {
                             if (c.getStart() <= key && c.getEnd() >= key && c.isActual()) {
