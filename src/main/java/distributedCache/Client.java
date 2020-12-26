@@ -18,6 +18,7 @@ public class Client {
     public static  ZMQ.Socket connect(ZContext context) {
         ZMQ.Socket socket = context.createSocket(SocketType.REQ);
         socket.setReceiveTimeOut(TIMEOUT);
-        socket.connect(add)
+        socket.connect(SERVER_ADDRESS);
+        return socket;
     }
 }
