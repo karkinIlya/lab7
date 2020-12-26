@@ -14,6 +14,7 @@ public class StorageServer {
         int end = start + cache.size();
 
         ZContext context = new ZContext(1);
+        
         ZMQ.Poller poller = context.createPoller(1);
         while(poller.poll(3000) != -1) {
 
