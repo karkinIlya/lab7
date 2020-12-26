@@ -38,7 +38,7 @@ public class DistributedServer {
 
             }
             if (poller.pollin(STORAGE_SOCKET)) {
-                
+
             }
         }
         context.destroySocket(clientSocket);
