@@ -26,7 +26,6 @@ public class StorageServer {
         long time = System.currentTimeMillis();
         while(poller.poll(3000) != -1) {
             if (System.currentTimeMillis() - time >= TIMEOUT) {
-
             }
         }
         context.destroySocket(dealerSocket);
