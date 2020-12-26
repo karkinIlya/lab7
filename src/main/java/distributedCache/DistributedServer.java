@@ -17,6 +17,9 @@ public class DistributedServer {
     public static final int CLIENT_SOCKET = 0;
     public static final int STORAGE_SOCKET = 1;
     public static final String GET_REQUEST = "get";
+    public static final String PUT_REQUEST = "put";
+    public static final String NOT_FOUND_ERROR = "not found";
+    public static final String ERROR = "error";
 
     public static void main(String[] argv) {
         ZContext context = new ZContext(THREADS_COUNT);
@@ -50,13 +53,15 @@ public class DistributedServer {
                             }
                         }
                         if (!found) {
-                            msg.getLast().reset("not found");
+                            msg.getLast().reset(NOT_FOUND_ERROR);
                             msg.send(clientSocket);
                         }
                     } else {
-                        msg.getLast().reset("error");
+                        msg.getLast().reset(ERROR);
                         msg.send(clientSocket);
                     }
+                } else if (stringMessage.startsWith(PUT_REQUEST)) {
+                    
                 }
             }
             if (poller.pollin(STORAGE_SOCKET)) {
