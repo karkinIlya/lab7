@@ -23,7 +23,7 @@ public class StorageServer {
         poller.register(dealerSocket, ZMQ.Poller.POLLIN);
         long time = System.currentTimeMillis();
         while(poller.poll(3000) != -1) {
-
+            //
         }
         context.destroySocket(dealerSocket);
         context.destroy();
