@@ -4,11 +4,11 @@ import org.zeromq.ZFrame;
 
 public class Cache {
     public static final int TIMEOUT = 5000;
-    private long time;
-    private int start;
-    private int end;
-    private ZFrame frame;
-    private String id;
+    public long time;
+    public int start;
+    public int end;
+    public ZFrame frame;
+    public String id;
 
     public Cache(int start, int end, String id, ZFrame frame) {
         this.time = System.currentTimeMillis();
