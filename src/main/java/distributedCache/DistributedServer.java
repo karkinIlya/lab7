@@ -65,18 +65,12 @@ public class DistributedServer {
                     if (splitedString.length >= 3) {
                         int key = Integer.parseInt(splitedString[1]);
                         String value = splitedString[2];
-                        boolean found = false;
                         for (Cache c : caches) {
                             if (c.getStart() <= key && c.getEnd() >= key) {
                                 c.getFrame().send(storageSocket, ZFrame.REUSE | ZFrame.MORE);
                                 msg.send(storageSocket, false);
-                                found = true;
                                 break;
                             }
-                        }
-                        if (!found) {
-                            msg.getLast().reset(NOT_FOUND_ERROR);
-                            msg.send(clientSocket);
                         }
                     } else {
                         msg.getLast().reset(ERROR);
