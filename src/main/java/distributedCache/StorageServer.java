@@ -19,6 +19,7 @@ public class StorageServer {
     private static final String id = UUID.randomUUID().toString();
     public static final int CLIENT_SOCKET = 0;
     public static final String GET_REQUEST = "get";
+    public static final String PUT_REQUEST = "put";
 
     public static void main(String[] argv) {
         int start = Integer.parseInt(argv[0]);
@@ -39,9 +40,23 @@ public class StorageServer {
             if (poller.pollin(CLIENT_SOCKET)) {
                 ZMsg msg = ZMsg.recvMsg(dealerSocket);
                 String stringMessage = msg.getLast().toString();
-                if(stringMessage.contains(GET_REQUEST)) {
-                    int index = Integer.parseInt(stringMessage.split(" ")[1]);
-                    msg.getLast().reset()
+                if (stringMessage.contains(GET_REQUEST)) {
+                    String[] splitedString = stringMessage.split(" ");
+                    if (splitedString.length >= 2) {
+                        int index = Integer.parseInt(splitedString[1]);
+                        msg.getLast().reset("cache " + cache.get(index - start));
+                    } else {
+                        msg.getLast().reset("error");
+                    }
+                    msg.send(dealerSocket);
+                }
+                if (stringMessage.contains(PUT_REQUEST)) {
+                    String[] splitedString = stringMessage.split(" ");
+                    if (splitedString.length >= 3) {
+                        int index = Integer.parseInt(splitedString[1]);
+                        String value = splitedString[2];
+                        cache.set(index - start, value);
+                    }
                 }
             }
         }

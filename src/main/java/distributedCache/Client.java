@@ -25,7 +25,7 @@ public class Client {
         Scanner in = new Scanner(System.in);
         while (true) {
             String cmd = in.nextLine();
-            if (cmd == "quit") {
+            if (cmd.equals("quit")) {
                 break;
             }
             client.send(cmd);
