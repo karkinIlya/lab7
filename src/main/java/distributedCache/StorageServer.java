@@ -25,5 +25,7 @@ public class StorageServer {
         while(poller.poll(3000) != -1) {
 
         }
+        context.destroySocket(dealerSocket);
+        context.destroy();
     }
 }
