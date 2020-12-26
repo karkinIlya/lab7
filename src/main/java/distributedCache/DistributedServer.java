@@ -1,9 +1,6 @@
 package distributedCache;
 
-import org.zeromq.SocketType;
-import org.zeromq.ZContext;
-import org.zeromq.ZMQ;
-import org.zeromq.ZMsg;
+import org.zeromq.*;
 
 import javax.rmi.ssl.SslRMIClientSocketFactory;
 import java.util.ArrayList;
@@ -40,7 +37,26 @@ public class DistributedServer {
                 ZMsg msg = ZMsg.recvMsg(clientSocket);
                 String stringMessage = msg.getLast().toString().toLowerCase();
                 if(stringMessage.startsWith(GET_REQUEST)) {
-                    
+                    String[] splitedString = stringMessage.split(" ");
+                    if (splitedString.length >= 2) {
+                        int key = Integer.parseInt(splitedString[1]);
+                        boolean found = false;
+                        for (Cache c : caches) {
+                            if (c.getStart() <= key && c.getEnd() >= key && c.isActual()) {
+                                c.getFrame().send(storageSocket, ZFrame.REUSE | ZFrame.MORE);
+                                msg.send(storageSocket, false);
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            msg.getLast().reset("not found");
+                            msg.send(clientSocket);
+                        }
+                    } else {
+                        msg.getLast().reset("error");
+                        msg.send(clientSocket);
+                    }
                 }
             }
             if (poller.pollin(STORAGE_SOCKET)) {
