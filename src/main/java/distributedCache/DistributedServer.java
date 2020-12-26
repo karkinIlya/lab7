@@ -80,6 +80,8 @@ public class DistributedServer {
             }
             if (poller.pollin(STORAGE_SOCKET)) {
                 ZMsg msg = ZMsg.recvMsg(storageSocket);
+                ZFrame frame = msg.unwrap();
+                
             }
         }
         context.destroySocket(clientSocket);
