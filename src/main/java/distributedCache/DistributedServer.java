@@ -22,7 +22,11 @@ public class DistributedServer {
         poller.register(clientSocket, ZMQ.Poller.POLLIN);
         poller.register(storageSocket, ZMQ.Poller.POLLIN);
         long time = System.currentTimeMillis();
-        while (poller.poll(TIMEOUT))
-
+        while (poller.poll(TIMEOUT) != -1) {
+            // обработка
+        }
+        context.destroySocket(clientSocket);
+        context.destroySocket(storageSocket);
+        context.destroy();
     }
 }
