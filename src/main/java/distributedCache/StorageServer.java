@@ -10,6 +10,8 @@ import java.util.Arrays;
 public class StorageServer {
 
     public static final String SERVER_ADDRESS = "tcp://localhost:8088";
+    public static final int TIMEOUT = 5000;
+    private static final ArrayList<> caches = new ArrayList();
 
     public static void main(String[] argv) {
         int start = Integer.parseInt(argv[0]);
@@ -23,7 +25,9 @@ public class StorageServer {
         poller.register(dealerSocket, ZMQ.Poller.POLLIN);
         long time = System.currentTimeMillis();
         while(poller.poll(3000) != -1) {
-            //
+            if (System.currentTimeMillis() - time >= TIMEOUT) {
+
+            }
         }
         context.destroySocket(dealerSocket);
         context.destroy();
