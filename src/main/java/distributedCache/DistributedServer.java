@@ -19,6 +19,7 @@ public class DistributedServer {
     private static final ArrayList<Cache> caches = new ArrayList<>();
     public static final int CLIENT_SOCKET = 0;
     public static final int STORAGE_SOCKET = 1;
+    public static final String GET_REQUEST = "get";
 
     public static void main(String[] argv) {
         ZContext context = new ZContext(THREADS_COUNT);
@@ -38,6 +39,9 @@ public class DistributedServer {
             if (poller.pollin(CLIENT_SOCKET)) {
                 ZMsg msg = ZMsg.recvMsg(clientSocket);
                 String stringMessage = msg.getLast().toString().toLowerCase();
+                if(stringMessage.startsWith(GET_REQUEST)) {
+                    
+                }
             }
             if (poller.pollin(STORAGE_SOCKET)) {
 
