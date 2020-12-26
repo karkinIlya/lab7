@@ -108,6 +108,8 @@ public class DistributedServer {
                         msg.getLast().reset(ERROR);
                         msg.send(clientSocket);
                     }
+                } else {
+                    msg.send(clientSocket);
                 }
             }
         }
