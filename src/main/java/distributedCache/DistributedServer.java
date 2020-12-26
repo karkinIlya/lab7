@@ -11,6 +11,6 @@ public class DistributedServer {
     public static void main(String[] argv) {
         ZContext context = new ZContext(THREADS_COUNT);
         ZMQ.Socket clientSocket = context.createSocket(SocketType.ROUTER);
-        clientSocket.bind()
+        clientSocket.bind("tcp://localhost:8086");
     }
 }
