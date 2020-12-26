@@ -17,5 +17,5 @@ public class Cache {
         this.id = id;
     }
 
-    boolean 
+    boolean is
 }
