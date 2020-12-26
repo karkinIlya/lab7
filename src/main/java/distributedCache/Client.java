@@ -4,6 +4,8 @@ import org.zeromq.SocketType;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ;
 
+import java.util.Scanner;
+
 public class Client {
 
     public static final int THREADS_COUNT = 1;
@@ -13,6 +15,12 @@ public class Client {
     public static void main(String[] argv) {
         ZContext context = new ZContext(THREADS_COUNT);
         ZMQ.Socket client = connect(context);
+        Scanner in = new Scanner(System.in);
+        while (true) {
+
+        }
+        context.destroySocket(client);
+        context.destroy();
     }
 
     public static  ZMQ.Socket connect(ZContext context) {
