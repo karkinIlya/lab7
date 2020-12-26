@@ -11,7 +11,7 @@ public class StorageServer {
 
     public static final String SERVER_ADDRESS = "tcp://localhost:8088";
     public static final int TIMEOUT = 5000;
-    private static final ArrayList<> caches = new ArrayList();
+    private static final ArrayList<Cache> caches = new ArrayList();
 
     public static void main(String[] argv) {
         int start = Integer.parseInt(argv[0]);
