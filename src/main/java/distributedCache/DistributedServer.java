@@ -64,6 +64,7 @@ public class DistributedServer {
                     String[] splitedString = stringMessage.split(" ");
                     if (splitedString.length >= 2) {
                         int key = Integer.parseInt(splitedString[1]);
+                        String value = 
                         boolean found = false;
                         for (Cache c : caches) {
                             if (c.getStart() <= key && c.getEnd() >= key && c.isActual()) {
