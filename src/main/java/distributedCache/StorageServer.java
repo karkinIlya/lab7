@@ -20,6 +20,7 @@ public class StorageServer {
         ZMQ.Socket dealerSocket = context.createSocket(SocketType.DEALER);
         dealerSocket.connect(SERVER_ADDRESS);
         ZMQ.Poller poller = context.createPoller(1);
+        poller.register(dealerSocket, ZMQ.Poller.POLLIN);
         long time = System.currentTimeMillis();
         while(poller.poll(3000) != -1) {
 
