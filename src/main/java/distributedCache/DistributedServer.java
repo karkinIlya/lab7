@@ -3,6 +3,7 @@ package distributedCache;
 import org.zeromq.SocketType;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ;
+import org.zeromq.ZMsg;
 
 import javax.rmi.ssl.SslRMIClientSocketFactory;
 import java.util.ArrayList;
@@ -35,7 +36,8 @@ public class DistributedServer {
                 time = System.currentTimeMillis();
             }
             if (poller.pollin(CLIENT_SOCKET)) {
-
+                ZMsg msg = ZMsg.recvMsg(clientSocket);
+                String stringMessage = msg.getLast().toString().toLowerCase();
             }
             if (poller.pollin(STORAGE_SOCKET)) {
 
