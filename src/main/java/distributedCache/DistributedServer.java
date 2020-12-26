@@ -61,7 +61,26 @@ public class DistributedServer {
                         msg.send(clientSocket);
                     }
                 } else if (stringMessage.startsWith(PUT_REQUEST)) {
-                    
+                    String[] splitedString = stringMessage.split(" ");
+                    if (splitedString.length >= 2) {
+                        int key = Integer.parseInt(splitedString[1]);
+                        boolean found = false;
+                        for (Cache c : caches) {
+                            if (c.getStart() <= key && c.getEnd() >= key && c.isActual()) {
+                                c.getFrame().send(storageSocket, ZFrame.REUSE | ZFrame.MORE);
+                                msg.send(storageSocket, false);
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            msg.getLast().reset(NOT_FOUND_ERROR);
+                            msg.send(clientSocket);
+                        }
+                    } else {
+                        msg.getLast().reset(ERROR);
+                        msg.send(clientSocket);
+                    }
                 }
             }
             if (poller.pollin(STORAGE_SOCKET)) {
