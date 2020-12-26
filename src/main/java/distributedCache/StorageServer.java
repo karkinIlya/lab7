@@ -10,7 +10,7 @@ public class StorageServer {
         ArrayList<String> cache = new ArrayList<>(Arrays.asList(argv).subList(1, argv.length));
         int end = start + cache.size();
 
-        
+        ZMQ.Poller poller = context.createPoller(1);
         while(poller.poll(3000) != -1) {
 
         }
