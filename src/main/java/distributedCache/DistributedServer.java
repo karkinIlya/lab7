@@ -79,7 +79,7 @@ public class DistributedServer {
                 }
             }
             if (poller.pollin(STORAGE_SOCKET)) {
-
+                ZMsg msg = ZMsg.recvMsg(storageSocket);
             }
         }
         context.destroySocket(clientSocket);
