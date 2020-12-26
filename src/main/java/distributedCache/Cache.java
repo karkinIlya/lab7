@@ -3,6 +3,7 @@ package distributedCache;
 import org.zeromq.ZFrame;
 
 public class Cache {
+    public static final int TIMEOUT = 5000;
     private long time;
     private int start;
     private int end;
@@ -17,5 +18,7 @@ public class Cache {
         this.id = id;
     }
 
-    boolean is
+    boolean isActual() {
+        return System.currentTimeMillis() - time <= TIMEOUT;
+    }
 }
