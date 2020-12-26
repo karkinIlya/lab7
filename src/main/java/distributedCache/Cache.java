@@ -18,6 +18,10 @@ public class Cache {
         this.id = id;
     }
 
+    public void setTime(long time) {
+        this.time = time;
+    }
+
     boolean isActual() {
         return System.currentTimeMillis() - time <= TIMEOUT;
     }

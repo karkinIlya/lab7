@@ -81,7 +81,34 @@ public class DistributedServer {
             if (poller.pollin(STORAGE_SOCKET)) {
                 ZMsg msg = ZMsg.recvMsg(storageSocket);
                 ZFrame frame = msg.unwrap();
-                
+                String stringMessage = msg.getLast().toString().toLowerCase();
+                if (stringMessage.startsWith("notify")) {
+                    String[] splitedString = stringMessage.split(" ");
+                    if (splitedString.length >= 4) {
+                        String id = splitedString[1];
+                        int start = Integer.parseInt(splitedString[2]);
+                        int end = Integer.parseInt(splitedString[3]);
+                        boolean found = false;
+                        int i = 0;
+                        for (Cache c : caches) {
+                            i++;
+                            if (c.getId().equals(id)) {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            caches.add(new Cache(start, end ,id, frame));
+                        } else {
+                            caches.get(i).setStart(start);
+                            caches.get(i).setEnd(end);
+                            caches.get(i).setTime(time);
+                        }
+                    } else {
+                        msg.getLast().reset(ERROR);
+                        msg.send(clientSocket);
+                    }
+                }
             }
         }
         context.destroySocket(clientSocket);
